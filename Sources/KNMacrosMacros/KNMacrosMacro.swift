@@ -6,7 +6,8 @@ import SwiftSyntaxMacros
 struct KNMacrosPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         AutoinitMacro.self,
-        DummyMacro.self,
+        DummyMacroMakerMacro.self,
         OpenMacro.self,
+        SimpleConformanceMacroMakerMacro.self,
     ]
 }
