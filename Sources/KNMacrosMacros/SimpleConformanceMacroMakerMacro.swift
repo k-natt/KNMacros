@@ -14,16 +14,6 @@ enum SCMMMError: Error {
     case emptyargs
 }
 
-enum StringParserError: Error {
-    case notAString
-    case noInterpolationAllowed
-}
-
-//@conformer(
-//  to: "ProtoName",
-//  with: "var x = 1",
-//    "var y = 2"
-//)
 public struct SimpleConformanceMacroMakerMacro {}
 
 extension SimpleConformanceMacroMakerMacro: MemberMacro {
@@ -41,15 +31,10 @@ extension SimpleConformanceMacroMakerMacro: MemberMacro {
         }
         let proto = first.expression
         // Need to collect these all from the iterator because we can't do `while` inside a builder.
-        var exprs: [ExprSyntax] = []
+        var allDecls = [String]()
         while let next = iter.next() {
-            exprs.append(next.expression)
+            allDecls.append(next.expression.trimmedDescription)
         }
-        let decls = ArrayExprSyntax(elements: .init(itemsBuilder: {
-            for e in exprs {
-                ArrayElementSyntax(expression: e)
-            }
-        }))
         return [
             """
             public static func expansion(
@@ -57,7 +42,9 @@ extension SimpleConformanceMacroMakerMacro: MemberMacro {
                 providingMembersOf declaration: some DeclGroupSyntax,
                 in context: some MacroExpansionContext
             ) throws -> [DeclSyntax] {
-                return \(decls)
+                [
+                    \(raw: allDecls.joined(separator: ",\n        "))
+                ]
             }
             """,
             """

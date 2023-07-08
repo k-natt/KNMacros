@@ -17,7 +17,7 @@ extension DummyMacroMakerMacro: MemberMacro {
         providingMembersOf declaration: some DeclGroupSyntax,
         in context: some MacroExpansionContext
     ) throws -> [DeclSyntax] {
-        [
+        return [
             """
             public static func expansion(
                 of node: AttributeSyntax,
