@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "knmacrohelpers",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/k-natt/KNMacroHelpers.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "77b38a1661c95eea39132b79cd0c8631c89b9dcf"
+      }
+    },
+    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
