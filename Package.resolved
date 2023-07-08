@@ -1,21 +1,11 @@
 {
   "pins" : [
     {
-      "identity" : "knmacrohelpers",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/k-natt/KNMacroHelpers.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "77b38a1661c95eea39132b79cd0c8631c89b9dcf"
-      }
-    },
-    {
       "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "f1e9245226002bb134884345d4809b9543da3666",
-        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-06-17-a"
+        "revision" : "7617b70fb8addcf29ab4d18f7e90d88bbe07851d"
       }
     }
   ],

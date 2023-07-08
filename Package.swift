@@ -3,6 +3,7 @@
 
 import PackageDescription
 import CompilerPluginSupport
+import SwiftUI
 
 let package = Package(
     name: "KNMacros",
@@ -13,6 +14,14 @@ let package = Package(
             name: "KNMacros",
             targets: ["KNMacros"]
         ),
+        .library(
+            name: "KNMetamacros",
+            targets: ["KNMetamacros"]
+        ),
+        .library(
+            name: "KNMacroHelpers",
+            targets: ["KNMacroHelpers"]
+        ),
         .executable(
             name: "KNMacrosClient",
             targets: ["KNMacrosClient"]
@@ -20,34 +29,43 @@ let package = Package(
     ],
     dependencies: [
         // Depend on the latest Swift 5.9 prerelease of SwiftSyntax
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
-        .package(url: "https://github.com/k-natt/KNMacroHelpers.git", .branch("main")),
+        .package(url: "https://github.com/apple/swift-syntax.git", revision: "7617b70fb8addcf29ab4d18f7e90d88bbe07851d"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        // Macro implementation that performs the source transformation of a macro.
         .macro(
             name: "KNMacrosMacros",
             dependencies: [
+                "KNMetamacros",
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
             ]
         ),
 
-        // Library that exposes a macro as part of its API, which is used in client programs.
-        .target(name: "KNMacros", dependencies: ["KNMacrosMacros"]),
+        .macro(
+            name: "KNMetamacrosMacros",
+            dependencies: [
+                "KNMacroHelpers",
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+            ]
+        ),
 
-        // A client of the library, which is able to use the macro in its own code.
+        .target(name: "KNMacros", dependencies: ["KNMacrosMacros"]),
+        .target(name: "KNMetamacros", dependencies: ["KNMetamacrosMacros"]),
+        .target(name: "KNMacroHelpers", dependencies: [
+            .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        ]),
+
         .executableTarget(
             name: "KNMacrosClient",
             dependencies: [
                 "KNMacros",
+                "KNMetamacros", // These should be transitively included but add explicitly just because.
+                "KNMacroHelpers",
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax")
             ]
         ),
 
-        // A test target used to develop the macro implementation.
         .testTarget(
             name: "KNMacrosTests",
             dependencies: [
@@ -55,5 +73,27 @@ let package = Package(
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),
+
+        .testTarget(
+            name: "KNMetamacrosTests",
+            dependencies: [
+                "KNMetamacrosMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+
+        .testTarget(
+            name: "KNMacroHelpersTests",
+            dependencies: [
+                "KNMacroHelpers",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )
+
+struct Previews_Package_LibraryContent: LibraryContentProvider {
+    var views: [LibraryItem] {
+        LibraryItem(/*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/)
+    }
+}
