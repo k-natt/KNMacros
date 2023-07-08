@@ -1,6 +1,6 @@
 
 @attached(member, names: arbitrary)
-public macro autoinit(_: String? = nil) = #externalMacro(module: "KNMacrosMacros", type: "AutoinitMacro")
+public macro autoinit(_ access: String? = nil) = #externalMacro(module: "KNMacrosMacros", type: "AutoinitMacro")
 
 @attached(member, names: arbitrary)
 @attached(conformance)
