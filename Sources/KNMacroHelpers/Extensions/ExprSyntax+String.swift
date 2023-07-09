@@ -14,11 +14,11 @@ enum StringParserError: Error {
 }
 
 extension ExprSyntax {
-    func asStringLiteral() throws -> String {
+    public func asStringLiteral() throws -> String {
         guard let strsyn = self.as(StringLiteralExprSyntax.self) else {
             throw StringParserError.notAString
         }
-        // We get multiple segments in a multi-line literal, for instance.
+        // We can get multiple segments, e.g. in a multi-line literal.
         return try strsyn.segments.map { segment -> String in
             switch segment {
             case .expressionSegment:
