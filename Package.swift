@@ -78,6 +78,7 @@ let package = Package(
             name: "KNMetamacrosTests",
             dependencies: [
                 "KNMetamacrosMacros",
+                "KNMacroHelpers",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),
