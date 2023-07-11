@@ -42,9 +42,9 @@ extension SimpleConformanceMacroMakerMacro: MemberMacro {
                 providingMembersOf declaration: some DeclGroupSyntax,
                 in context: some MacroExpansionContext
             ) throws -> [DeclSyntax] {
-                [
+                accessorize(to: declaration, [
                     \(raw: allDecls.joined(separator: ",\n        "))
-                ]
+                ])
             }
             """,
             """

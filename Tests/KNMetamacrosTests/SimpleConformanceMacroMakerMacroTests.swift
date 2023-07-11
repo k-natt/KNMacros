@@ -32,9 +32,9 @@ final class SimpleConformanceMacroMakerMacroTests: XCTestCase {
                 providingMembersOf declaration: some DeclGroupSyntax,
                 in context: some MacroExpansionContext
             ) throws -> [DeclSyntax] {
-                [
+                accessorize(to: declaration, [
 
-                ]
+                ])
             }
             public static func expansion(
                 of node: AttributeSyntax,
@@ -71,10 +71,10 @@ final class SimpleConformanceMacroMakerMacroTests: XCTestCase {
                 providingMembersOf declaration: some DeclGroupSyntax,
                 in context: some MacroExpansionContext
             ) throws -> [DeclSyntax] {
-                [
+                accessorize(to: declaration, [
                     "var x: Int",
                     "var y: String"
-                ]
+                ])
             }
             public static func expansion(
                 of node: AttributeSyntax,
@@ -114,15 +114,15 @@ final class SimpleConformanceMacroMakerMacroTests: XCTestCase {
                 providingMembersOf declaration: some DeclGroupSyntax,
                 in context: some MacroExpansionContext
             ) throws -> [DeclSyntax] {
-                [
+                accessorize(to: declaration, [
                     \"""
-                        var x = 1
-                        public var y: String
-                        open func foo() -> Bar? {
-                            nil
-                        }
-                    \"""
-                ]
+                                var x = 1
+                                public var y: String
+                                open func foo() -> Bar? {
+                                    nil
+                                }
+                            \"""
+                ])
             }
             public static func expansion(
                 of node: AttributeSyntax,
