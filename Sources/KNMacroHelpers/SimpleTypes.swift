@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias TupleList = [(label: String?, value: SimpleType?)]
+public typealias SimpleTupleList = [(label: String?, value: SimpleType?)]
 indirect public enum SimpleType {
     case access(SimpleType?, String)
     case array([SimpleType?])
@@ -19,7 +19,7 @@ indirect public enum SimpleType {
     case `nil`
     case string(String)
     // May be a literal tuple, could also be an argument list or similar.
-    case tupleList(TupleList)
+    case tupleList(SimpleTupleList)
 }
 
 extension SimpleType: Equatable {

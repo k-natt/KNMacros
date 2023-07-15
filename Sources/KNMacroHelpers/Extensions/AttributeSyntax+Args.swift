@@ -9,7 +9,7 @@ import Foundation
 import SwiftSyntax
 
 public extension AttributeSyntax {
-    func args() throws -> TupleList {
+    func args() throws -> SimpleTupleList {
         guard let argument else { return [] }
         switch argument {
         case .argumentList(let list):

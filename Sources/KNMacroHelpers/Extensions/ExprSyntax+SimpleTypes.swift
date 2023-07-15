@@ -83,7 +83,7 @@ extension TupleExprSyntax {
 }
 
 extension TupleExprElementListSyntax {
-    func collect() -> TupleList {
+    func collect() -> SimpleTupleList {
         map { ($0.label?.text, $0.expression.asSimpleType()) }
     }
 }
