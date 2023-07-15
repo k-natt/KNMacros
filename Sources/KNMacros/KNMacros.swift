@@ -10,3 +10,5 @@ public macro openStringEnum() = #externalMacro(module: "KNMacrosMacros", type: "
 @attached(member)
 public macro rawValue(_: String) = #externalMacro(module: "KNMacrosMacros", type: "RawValueMacro")
 
+@attached(member, names: arbitrary)
+public macro caseAccessors() = #externalMacro(module: "KNMacrosMacros", type: "EnumAccessorMacro")

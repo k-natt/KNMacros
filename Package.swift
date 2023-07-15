@@ -35,6 +35,7 @@ let package = Package(
         .macro(
             name: "KNMacrosMacros",
             dependencies: [
+                "KNMacroHelpers",
                 "KNMetamacros",
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
@@ -70,6 +71,7 @@ let package = Package(
             name: "KNMacrosTests",
             dependencies: [
                 "KNMacrosMacros",
+                "KNMacroHelpers",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),
