@@ -9,8 +9,9 @@ import Foundation
 import SwiftDiagnostics
 
 enum Errors {
-    case wrongType(actual: Any.Type, expected: Any.Type?)
     case noStringInterpolation
+    case wrongCount(noun: String, actual: Int, expected: Int)
+    case wrongType(actual: Any.Type, expected: Any.Type?)
 }
 
 extension Errors: DiagnosticMessage {
@@ -19,6 +20,7 @@ extension Errors: DiagnosticMessage {
         switch self {
         case .wrongType: id = 1
         case .noStringInterpolation: id = 2
+        case .wrongCount: id = 3
         }
         return MessageID(domain: "KNMacroHelperErrors", id: "\(id)")
     }
@@ -27,10 +29,12 @@ extension Errors: DiagnosticMessage {
 
     var message: String {
         switch self {
-        case .wrongType(actual: let actual, expected: let expected):
-            return "Found unexpected type \(actual).\(expected.map{" Expected \($0)."} ?? "")"
         case .noStringInterpolation:
             return "Should not have string interpolation in a macro argument."
+        case .wrongCount(let noun, let actual, let expected):
+            return "Expected \(expected) \(noun)(s), found \(actual)"
+        case .wrongType(actual: let actual, expected: let expected):
+            return "Found unexpected type \(actual).\(expected.map{" Expected \($0)."} ?? "")"
         }
     }
 }

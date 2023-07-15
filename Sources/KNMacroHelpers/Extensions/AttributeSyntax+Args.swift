@@ -9,14 +9,22 @@ import Foundation
 import SwiftSyntax
 
 public extension AttributeSyntax {
-    func args() throws -> SimpleTupleList {
+    /// Willl throw an error if count is nonnull and does not match the actual list length.
+    func args(expect count: Int? = nil) throws -> SimpleTupleList {
         guard let argument else { return [] }
         switch argument {
         case .argumentList(let list):
-            return list.collect()
+            let args = list.collect()
+            if let count, args.count != count {
+                throw Errors.wrongCount(noun: "argument", actual: args.count, expected: count).asError(from: argument)
+            }
+            return args
 
         // Fairly sure this can't happen for a macro but we can handle it so may as well.
         case .string(let expr):
+            if let count, count != 1 {
+                throw Errors.wrongCount(noun: "argument", actual: 1, expected: count).asError(from: argument)
+            }
             return [(nil, .string(try expr.content()))]
 
         default:

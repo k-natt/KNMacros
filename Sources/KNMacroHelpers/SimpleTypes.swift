@@ -24,17 +24,17 @@ indirect public enum SimpleType {
 
 public extension SimpleType {
     var asAccess: (SimpleType?, String)? {
-        guard case .access(let simpleType, let string) = self else {
+        guard case .access(let value1, let value2) = self else {
             return nil
         }
-        return (simpleType, string)
+        return (value1, value2)
     }
 
     var asArray: [SimpleType?]? {
-        guard case .array(let array) = self else {
+        guard case .array(let value) = self else {
             return nil
         }
-        return array
+        return value
     }
 
     var asDict: [(key: SimpleType?, value: SimpleType?)]? {
@@ -92,7 +92,6 @@ public extension SimpleType {
         }
         return value
     }
-
 }
 
 extension SimpleType: Equatable {
